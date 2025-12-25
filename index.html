@@ -1,301 +1,284 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+  <meta charset="UTF-8" />
   <title>Для моей подруги</title>
   <style>
     * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
-    
+
     body {
-      background: linear-gradient(to bottom, #ff0066, #ff3399, #ff66b2);
-      color: white;
-      font-family: 'Arial Black', sans-serif;
+      background: linear-gradient(135deg, #bd1897, #4a1e6d, #16213e);
+      color: #fff;
+      min-height: 100vh;
     }
-    
-    .first-page {
+
+    header {
       height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 20px;
+      animation: fadeIn 2s ease forwards;
     }
-    
-    .first-page h1 {
-      font-size: 60px;
-      margin-bottom: 30px;
-      text-shadow: 5px 5px 0 #ff0055;
+
+    header h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
     }
-    
-    .first-page p {
-      font-size: 30px;
-      font-weight: bold;
+
+    header p {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      opacity: 0.8;
     }
-    
-    .page {
-      height: 100vh;
-      display: flex;
-      padding: 50px;
-      background: linear-gradient(to right, rgba(255,0,102,0.9), rgba(255,51,153,0.9));
-      margin: 10px;
-      border-radius: 30px;
-      box-shadow: 0 0 50px rgba(255,0,102,0.5);
-    }
-    
-    .text-part {
-      width: 50%;
-      padding-right: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .photo-part {
-      width: 50%;
+
+    /* Остальные страницы */
+    .love-page {
+      min-height: 100vh;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      padding: 80px 10%;
+      gap: 60px;
+    }
+
+    .text-side {
+      flex: 1;
+      max-width: 50%;
+    }
+
+    .photo-side {
+      flex: 1;
+      max-width: 45%;
+      display: flex;
       justify-content: center;
+      align-items: center;
     }
-    
-    .title {
-      font-size: 70px;
-      color: #ffcc00;
+
+    .love-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #ff99cc;
       margin-bottom: 40px;
-      text-transform: uppercase;
-      text-shadow: 3px 3px 0 #ff3300;
+      line-height: 1.2;
+      text-shadow: 0 0 20px rgba(255, 153, 204, 0.4);
     }
-    
-    .description {
-      font-size: 28px;
-      line-height: 1.5;
-      background-color: rgba(255, 255, 255, 0.2);
+
+    .love-story {
+      font-size: 1.4rem;
+      line-height: 1.8;
+      color: #e6e6ff;
+      background: rgba(255, 255, 255, 0.05);
       padding: 30px;
       border-radius: 20px;
-      border: 3px solid #ff0066;
-      font-weight: bold;
+      border-left: 5px solid #ff66cc;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
-    
-    .photo {
-      max-width: 90%;
-      max-height: 80vh;
+
+    .love-photo {
+      width: 100%;
+      max-height: 700px;
+      object-fit: contain;
       border-radius: 20px;
-      border: 5px solid #ffcc00;
-      box-shadow: 15px 15px 0 #ff0066;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.5s ease;
     }
-    
-    .fire {
+
+    .love-photo:hover {
+      transform: scale(1.02);
+    }
+
+    .heart-floating {
       position: fixed;
-      font-size: 40px;
-      z-index: 1000;
+      top: -50px;
+      font-size: 24px;
+      color: #ff66cc;
+      animation: floatDown linear forwards;
       pointer-events: none;
+      z-index: 1000;
     }
-    
-    @keyframes fire-anim {
-      0% { top: -50px; transform: scale(0.5); opacity: 1; }
-      100% { top: 100vh; transform: scale(1.5); opacity: 0; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    
-    .divider {
-      height: 5px;
-      background: linear-gradient(to right, #ff0066, #ffcc00, #ff0066);
-      margin: 20px 50px;
-      border-radius: 5px;
+
+    @keyframes floatDown {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+      }
     }
-    
-    @media (max-width: 900px) {
-      .page {
+
+    /* Анимация появления страниц */
+    .love-page {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 1.2s ease;
+    }
+
+    .love-page.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .separator {
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 153, 204, 0.6), 
+        transparent);
+      margin: 0 10%;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 1100px) {
+      .love-page {
         flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-        padding: 30px;
+        text-align: center;
+        padding: 60px 20px;
       }
       
-      .text-part, .photo-part {
-        width: 100%;
-        padding-right: 0;
+      .text-side, .photo-side {
+        max-width: 100%;
       }
       
-      .text-part {
-        margin-bottom: 40px;
-      }
-      
-      .title {
-        font-size: 45px;
-      }
-      
-      .description {
-        font-size: 22px;
+      .love-title {
+        font-size: 2.8rem;
       }
     }
   </style>
 </head>
 <body>
+  <header>
+    <div>
+      <h1>ДЛЯ МОЕЙ АХУЕННОЙ ПОДРУГИ 🔥</h1>
+      <p>Листай вниз, смотри как ты крута! 💥</p>
+    </div>
+  </header>
 
-  <div class="first-page">
-    <h1>ДЛЯ МОЕЙ АХУЕННОЙ ПОДРУГИ 🔥</h1>
-    <p>Листай вниз, смотри как ты крута! 💥</p>
-  </div>
-  
-  <div class="divider"></div>
+  <div class="separator"></div>
 
   <!-- Страница 1 -->
-  <div class="page" id="page1">
-    <div class="text-part">
-      <div class="title">ТЫ ПРОСТО ОГОНЬ! 🔥</div>
-      <div class="description">
-        С тобой никогда не скучно! Ты — тот человек, который превращает обычный день в приключение. 
+  <div class="love-page" id="page1">
+    <div class="text-side">
+      <div class="love-title">ТЫ ПРОСТО ОГОНЬ! 🔥</div>
+      <div class="love-story">
+         С тобой никогда не скучно! Ты — тот человек, который превращает обычный день в приключение. 
         Твоя энергия заряжает всех вокруг, а твой характер — это смесь драйва, юмора и крутости!
       </div>
     </div>
-    <div class="photo-part">
-      <img src="photo/1.jpg" class="photo" alt="Ты огонь!">
+    <div class="photo-side">
+      <img src="photo/1.jpg" class="love-photo" alt="огонь">
     </div>
   </div>
-  
-  <div class="divider"></div>
 
-  <!-- Страница 2 -->
-  <div class="page" id="page2">
-    <div class="text-part">
-      <div class="title">КОРОЧЕ, ТЫ ЛУЧШАЯ! 💯</div>
-      <div class="description">
-        Настоящая, верная и всегда готовая поддержать. С тобой можно говорить часами, молчать, 
+  <div class="separator"></div>
+
+    <!-- Страница 2 -->
+  <div class="love-page" id="page2">
+    <div class="text-side">
+      <div class="love-title">>КОРОЧЕ, ТЫ ЛУЧШАЯ! 💯</div>
+      <div class="love-story">
+         Настоящая, верная и всегда готовая поддержать. С тобой можно говорить часами, молчать, 
         смеяться до слез или просто тупить — и все равно будет кайфово. Таких подруг, как ты, больше нет!
       </div>
     </div>
-    <div class="photo-part">
-      <img src="photo/2.jpg" class="photo" alt="Ты лучшая!">
+    <div class="photo-side">
+      <img src="photo/2.jpg" class="love-photo" alt="лучшая">
     </div>
   </div>
-  
-  <div class="divider"></div>
+
+  <div class="separator"></div>
 
   <!-- Страница 3 -->
-  <div class="page" id="page3">
-    <div class="text-part">
-      <div class="title">СТИЛЬНАЯ И КРУТАЯ 👑</div>
-      <div class="description">
-        Твой стиль — это отдельный вид искусства. Ты умеешь сочетать несочетаемое, 
+  <div class="love-page" id="page3">
+    <div class="text-side">
+      <div class="love-title">СТИЛЬНАЯ И КРУТАЯ 👑</div>
+      <div class="love-story">
+       Твой стиль — это отдельный вид искусства. Ты умеешь сочетать несочетаемое, 
         выглядеть дерзко и при этом оставаться собой. Каждый твой образ — это выстрел в десятку!
       </div>
     </div>
-    <div class="photo-part">
-      <img src="photo/3.jpg" class="photo" alt="Стильная и крутая">
+    <div class="photo-side">
+      <img src="photo/3.jpg" class="love-photo" alt="стильная">
     </div>
   </div>
-  
-  <div class="divider"></div>
+
+  <div class="separator"></div>
 
   <!-- Страница 4 -->
-  <div class="page" id="page4">
-    <div class="text-part">
-      <div class="title">НЕПОВТОРИМАЯ И УНИКАЛЬНАЯ ✨</div>
-      <div class="description">
+  <div class="love-page" id="page4">
+    <div class="text-side">
+      <div class="love-title">НЕПОВТОРИМАЯ И УНИКАЛЬНАЯ</div>
+      <div class="love-story">
         Такой, как ты, нет больше ни у кого. Твоя харизма, твой взгляд на жизнь, 
         твои шутки — все это делает тебя единственной и неповторимой. Ты — эксклюзив!
       </div>
     </div>
-    <div class="photo-part">
-      <img src="photo/4.jpg" class="photo" alt="Уникальная">
+    <div class="photo-side">
+      <img src="photo/4.jpg" class="love-photo" alt="уникальная">
     </div>
   </div>
 
-  <script>
-    // Создаем огненные эмодзи
-    function createFire() {
-      var fire = document.createElement('div');
-      fire.className = 'fire';
-      
-      var emojis = ['🔥', '💥', '✨', '🌟', '⭐', '🎇', '🧨'];
-      fire.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-      
-      fire.style.left = Math.random() * 100 + 'vw';
-      fire.style.top = '-50px';
-      fire.style.color = ['#ff0066', '#ffcc00', '#ff3300'][Math.floor(Math.random() * 3)];
-      fire.style.fontSize = (30 + Math.random() * 40) + 'px';
-      
-      document.body.appendChild(fire);
-      
-      fire.style.animation = 'fire-anim ' + (2 + Math.random() * 3) + 's linear forwards';
-      
-      setTimeout(function() {
-        if (fire.parentNode) {
-          fire.remove();
-        }
-      }, 5000);
-    }
-    
-    setInterval(createFire, 300);
-    
-    // Сразу много огня
-    setTimeout(function() {
-      for(var i = 0; i < 15; i++) {
-        setTimeout(createFire, i * 100);
-      }
-    }, 500);
-    
-    // Показываем страницы
-    var pages = document.querySelectorAll('.page');
-    
-    function showPages() {
-      var screenHeight = window.innerHeight;
-      
-      for(var i = 0; i < pages.length; i++) {
-        var page = pages[i];
-        var pageTop = page.getBoundingClientRect().top;
-        
-        if(pageTop < screenHeight * 0.85) {
-          page.style.opacity = '1';
-          page.style.transform = 'scale(1)';
-        }
-      }
-    }
-    
-    // Начальные настройки страниц
-    for(var i = 0; i < pages.length; i++) {
-      pages[i].style.opacity = '0';
-      pages[i].style.transform = 'scale(0.9)';
-      pages[i].style.transition = 'opacity 0.8s, transform 0.8s';
-    }
-    
-    window.addEventListener('scroll', showPages);
-    window.addEventListener('load', showPages);
-    
-    // Клик по разделителям
-    var dividers = document.querySelectorAll('.divider');
-    
-    for(var i = 0; i < dividers.length; i++) {
-      dividers[i].addEventListener('click', function() {
-        var nextPage = this.nextElementSibling;
-        if(nextPage && nextPage.classList.contains('page')) {
-          nextPage.scrollIntoView({
-            behavior: 'smooth'
-          });
+  <div class="separator"></div>
+  
+ 
+<script>
+//скрол страниц анимация
+    const pages = document.querySelectorAll('.love-page');
+
+    function checkPages() {
+      const trigger = window.innerHeight * 0.85;
+      pages.forEach(page => {
+        const top = page.getBoundingClientRect().top;
+        if (top < trigger) {
+          page.classList.add('visible');
         }
       });
     }
+
+    window.addEventListener('scroll', checkPages);
+    window.addEventListener('load', checkPages);
+
+    //сердечки
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-floating');
+      heart.innerHTML = '🎊';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+      heart.style.fontSize = 20 + Math.random() * 30 + 'px';
+      heart.style.opacity = 0.7 + Math.random() * 0.3;
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    // Запускаем сердечки
+    setInterval(createHeart, 800);
     
-    // Случайная смена цвета фона при скролле
-    var colors = [
-      'linear-gradient(to bottom, #ff0066, #ff3399, #ff66b2)',
-      'linear-gradient(to bottom, #ff3300, #ff6633, #ff9966)',
-      'linear-gradient(to bottom, #cc0066, #ff3399, #ff66cc)',
-      'linear-gradient(to bottom, #ff0099, #ff33cc, #ff66ff)'
-    ];
-    
-    var lastScroll = 0;
-    
-    window.addEventListener('scroll', function() {
-      var currentScroll = window.pageYOffset;
-      
-      if (currentScroll > lastScroll + 300) {
-        document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
-        document.body.style.transition = 'background 1s';
-        lastScroll = currentScroll;
+    // Первые сердечки
+    setTimeout(() => {
+      for(let i = 0; i < 15; i++) {
+        setTimeout(createHeart, i * 200);
       }
+    }, 1000);
+
+    // Плавный скролл при клике на разделители
+    document.querySelectorAll('.separator').forEach(sep => {
+      sep.addEventListener('click', () => {
+        const nextPage = sep.nextElementSibling;
+        if (nextPage && nextPage.classList.contains('love-page')) {
+          nextPage.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
   </script>
 
